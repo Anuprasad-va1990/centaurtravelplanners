@@ -45,13 +45,15 @@
             top: 0;
             width: 100%;
             padding: 2rem 4rem;
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             z-index: 1000;
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         nav.scrolled {
             padding: 1rem 4rem;
+            background: rgba(255, 255, 255, 0.98);
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
         }
 
@@ -158,12 +160,15 @@
             align-items: center;
             padding: 8rem 4rem 4rem;
             position: relative;
+            overflow: hidden;
         }
 
         .hero-content {
             max-width: 1400px;
             margin: 0 auto;
             width: 100%;
+            z-index: 2;
+            position: relative;
         }
 
         .hero-tag {
@@ -228,12 +233,12 @@
         .hero-visual {
             position: absolute;
             right: 0;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 0;
             width: 40%;
-            height: 80vh;
+            height: 100%;
             opacity: 0;
             animation: fadeIn 1s ease 0.6s forwards;
+            z-index: 1;
         }
 
         .hero-image {
@@ -248,10 +253,16 @@
             filter: grayscale(0%);
         }
 
+        /* Fixed parallax effect - constrained movement */
+        .hero-image-parallax {
+            transform: translateY(0);
+            transition: transform 0.1s ease-out;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -262,6 +273,799 @@
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        /* Trust Badge */
+        .trust-badge {
+            position: absolute;
+            bottom: 4rem;
+            left: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+        }
+
+        .trust-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .trust-badge .stars {
+            color: var(--gold);
+        }
+
+        /* Modern Packages Section - IMPROVED */
+        .packages {
+            padding: 8rem 4rem;
+            background: var(--white);
+        }
+
+        .modern-packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .modern-package-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            height: 400px; /* Fixed height for consistency */
+        }
+
+        .modern-package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .package-image-container {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .modern-package-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+            filter: grayscale(100%); /* Start with grayscale */
+        }
+
+        .modern-package-card:hover .modern-package-image {
+            transform: scale(1.1);
+            filter: grayscale(0%); /* Remove grayscale on hover */
+        }
+
+        /* Always visible package title overlay */
+        .package-title-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: var(--white);
+            padding: 2rem 1.5rem 1.5rem;
+        }
+
+        .package-main-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .package-duration {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* Hover details overlay */
+        .package-details-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9), rgba(0,0,0,0.7));
+            color: var(--white);
+            padding: 2rem;
+            opacity: 0;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .modern-package-card:hover .package-details-overlay {
+            opacity: 1;
+        }
+
+        .package-header-details {
+            text-align: center;
+        }
+
+        .package-header-details h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+        }
+
+        .package-duration-badge {
+            background: rgba(251, 191, 36, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 1px solid var(--gold);
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .package-route-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .route-label-overlay {
+            font-weight: 600;
+            color: var(--gold);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .route-text-overlay {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        .package-highlights-overlay {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .highlight-item-overlay {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .package-price-overlay {
+            text-align: center;
+            background: var(--gold);
+            color: var(--black);
+            padding: 1rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Fleet Section */
+        .fleet {
+            padding: 8rem 4rem;
+            background: var(--light-gray);
+        }
+
+        .fleet-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .fleet-filter {
+            padding: 0.75rem 2rem;
+            background: var(--white);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--gray);
+        }
+
+        .fleet-filter.active {
+            background: var(--black);
+            color: var(--white);
+            border-color: var(--black);
+        }
+
+        .fleet-filter:hover:not(.active) {
+            border-color: var(--gold);
+            color: var(--black);
+        }
+
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .vehicle-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .vehicle-image {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .vehicle-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .vehicle-card:hover .vehicle-image img {
+            transform: scale(1.1);
+        }
+
+        .vehicle-type {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--gold);
+            color: var(--black);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .coming-soon-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(251, 191, 36, 0.9);
+            color: var(--black);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            backdrop-filter: blur(10px);
+        }
+
+        .vehicle-book.coming-soon {
+            background: var(--gray);
+            cursor: not-allowed;
+        }
+
+        .vehicle-info {
+            padding: 1.5rem;
+        }
+
+        .vehicle-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--black);
+        }
+
+        .vehicle-features {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .vehicle-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .vehicle-book {
+            display: block;
+            text-align: center;
+            padding: 0.75rem;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .vehicle-book:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* Image Gallery Modal - IMPROVED */
+        .image-gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .image-gallery-modal.active {
+            display: flex;
+        }
+
+        .gallery-container {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        .gallery-header {
+            padding: 1.5rem;
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gallery-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .gallery-counter {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .close-gallery {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-gallery:hover {
+            background: var(--gold);
+            transform: rotate(90deg);
+        }
+
+        .gallery-main-image {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .gallery-main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .gallery-nav:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        .gallery-nav.prev {
+            left: 1rem;
+        }
+
+        .gallery-nav.next {
+            right: 1rem;
+        }
+
+        .gallery-thumbnails {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .gallery-thumbnail {
+            width: 80px;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .gallery-thumbnail.active {
+            opacity: 1;
+            border: 2px solid var(--gold);
+        }
+
+        .gallery-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-actions {
+            padding: 1.5rem;
+            border-top: 1px solid var(--light-gray);
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .gallery-book-btn {
+            padding: 1rem 3rem;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-book-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* Happy Travelers Gallery - IMPROVED with popup functionality */
+        .travelers-gallery-container {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 0 50px;
+        }
+
+        .travelers-scroll-container {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem 0 2rem;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-snap-type: x mandatory;
+        }
+
+        .travelers-scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .traveler-tile {
+            position: relative;
+            width: 200px;
+            height: 150px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            scroll-snap-align: center;
+        }
+
+        .traveler-tile:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+            border: 2px solid var(--gold);
+        }
+
+        .traveler-tile::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(251, 191, 36, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .traveler-tile:hover::after {
+            opacity: 1;
+        }
+
+        .traveler-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.4s ease;
+        }
+
+        .traveler-tile:hover .traveler-image {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        .gallery-scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-scroll-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .gallery-scroll-btn.prev {
+            left: 10px;
+        }
+
+        .gallery-scroll-btn.next {
+            right: 10px;
+        }
+
+        /* Travelers Gallery Modal - NEW */
+        .travelers-gallery-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .travelers-gallery-modal.active {
+            display: flex;
+        }
+
+        .travelers-modal-container {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: default;
+            animation: modalSlideIn 0.4s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .travelers-modal-header {
+            padding: 1.5rem;
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .travelers-modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .travelers-modal-counter {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .close-travelers-gallery {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .close-travelers-gallery:hover {
+            background: var(--gold);
+            transform: rotate(90deg);
+        }
+
+        .travelers-modal-main-image {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .travelers-modal-main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: var(--black);
+            transition: opacity 0.3s ease;
+        }
+
+        .travelers-modal-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--white);
+            font-size: 1.2rem;
+            z-index: 1;
+        }
+
+        .travelers-modal-loading::after {
+            content: '...';
+            animation: loading 1s infinite;
+        }
+
+        @keyframes loading {
+            0%, 33% { content: '.'; }
+            34%, 66% { content: '..'; }
+            67%, 100% { content: '...'; }
+        }
+
+        .travelers-modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .travelers-modal-nav:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        .travelers-modal-nav.prev {
+            left: 1rem;
+        }
+
+        .travelers-modal-nav.next {
+            right: 1rem;
+        }
+
+        .travelers-modal-thumbnails {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .travelers-modal-thumbnail {
+            width: 80px;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .travelers-modal-thumbnail.active {
+            opacity: 1;
+            border: 2px solid var(--gold);
+        }
+
+        .travelers-modal-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .travelers-modal-info {
+            padding: 1.5rem;
+            background: var(--light-gray);
+            text-align: center;
+        }
+
+        .travelers-modal-description {
+            color: var(--gray);
+            font-style: italic;
         }
 
         /* About Section */
@@ -315,17 +1119,13 @@
             color: var(--gray);
         }
 
-        /* Services Section */
+        /* Service section */
         .services {
             padding: 8rem 4rem;
+            background: var(--white);
         }
 
         .services-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .container {
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -338,6 +1138,9 @@
         .section-title {
             font-size: 3rem;
             margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
         }
 
         .section-subtitle {
@@ -359,6 +1162,11 @@
             border: 1px solid #eee;
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
+            min-height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .service-card:hover {
@@ -366,6 +1174,7 @@
             color: var(--white);
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--gold);
         }
 
         .service-card:hover h3,
@@ -373,22 +1182,232 @@
             color: var(--white);
         }
 
+        /* Service Number as Visual Element */
         .service-number {
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 800;
-            opacity: 0.1;
-            margin-bottom: 1rem;
+            color: var(--gold);
+            opacity: 0.2;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            line-height: 1;
         }
 
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        .service-card:hover .service-number {
+            opacity: 1;
+            color: var(--gold);
+            transform: scale(1.1);
+        }
+
+        /* Typography Focus */
+        .service-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
             transition: color 0.3s ease;
         }
 
-        .service-card p {
+        .service-description {
             color: var(--gray);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
             transition: color 0.3s ease;
+            flex-grow: 1;
+        }
+
+        /* Keywords highlighting */
+        .service-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .keyword {
+            padding: 0.3rem 0.8rem;
+            background: var(--light-gray);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .keyword {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* Bottom accent line */
+        .service-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .service-card:hover::after {
+            width: 100%;
+        }
+
+        /* Alternative design for better visual variety */
+        .service-card:nth-child(even) {
+            background: var(--light-gray);
+        }
+
+        .service-card:nth-child(even):hover {
+            background: var(--black);
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            padding: 5rem 4rem;
+            background: var(--light-gray);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .review-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .reviewer-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .review-stars {
+            display: flex;
+            gap: 0.1rem;
+            color: #fbbf24;
+            font-size: 0.9rem;
+        }
+
+        .review-text {
+            color: var(--gray);
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* Google Reviews Banner */
+        .google-reviews-banner {
+            background: var(--black);
+            color: var(--white);
+            padding: 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reviews-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+        }
+
+        .reviews-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .google-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .google-logo svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .rating-display {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stars {
+            display: flex;
+            gap: 0.25rem;
+            color: var(--gold);
+        }
+
+        .rating-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .rating-text {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .review-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            background: var(--white);
+            color: var(--black);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .review-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+            border-color: var(--black);
         }
 
         /* Destinations Section */
@@ -439,6 +1458,7 @@
             letter-spacing: 0.05em;
             white-space: nowrap;
             transition: opacity 0.3s ease;
+            cursor: pointer;
         }
 
         .destination-item:hover {
@@ -452,65 +1472,168 @@
             border-radius: 50%;
         }
 
-        /* Gallery Section */
-        .gallery {
-            padding: 8rem 4rem;
-        }
-
-        .gallery-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            height: 400px;
+        /* Clickable Title */
+        .clickable-title {
             cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(45deg, #fbbf24, #f59e0b, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+            animation: shimmer 2s ease-in-out infinite alternate;
         }
 
-        .gallery-item:nth-child(1) {
-            grid-column: span 2;
+        @keyframes shimmer {
+            0% {
+                background: linear-gradient(45deg, #fbbf24, #f59e0b, #d97706);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            100% {
+                background: linear-gradient(45deg, #d97706, #fbbf24, #f59e0b);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
         }
 
-        .gallery-item:nth-child(4) {
-            grid-column: span 2;
+        .clickable-title:hover {
+            transform: translateY(-3px) scale(1.05);
+            filter: drop-shadow(0 10px 20px rgba(251, 191, 36, 0.4));
         }
 
-        .gallery-image {
+        /* All Packages Modal */
+        .all-packages-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+        }
+
+        .all-packages-modal.active {
+            display: flex;
+        }
+
+        .all-packages-container {
+            position: relative;
+            width: 95%;
+            max-width: 1200px;
+            max-height: 90vh;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: default;
+            animation: modalSlideIn 0.4s ease;
+        }
+
+        .modal-header {
+            padding: 2rem;
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .close-modal {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--white);
+            color: var(--black);
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            background: var(--gold);
+            transform: rotate(90deg);
+        }
+
+        .all-packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .destination-package-card {
+            position: relative;
+            height: 320px;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .destination-package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .destination-package-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
 
-        .gallery-item:hover .gallery-image {
+        .destination-package-card:hover img {
             transform: scale(1.1);
         }
 
-        .gallery-overlay {
+        .package-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
             padding: 2rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
             color: var(--white);
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
         }
 
-        .gallery-item:hover .gallery-overlay {
-            transform: translateY(0);
-        }
-
-        .gallery-title {
-            font-size: 1.5rem;
+        .package-overlay h3 {
+            font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
+        }
+
+        .package-overlay p {
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .package-price-tag {
+            background: var(--gold);
+            color: var(--black);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.875rem;
+            display: inline-block;
         }
 
         /* Contact Section */
@@ -702,6 +1825,70 @@
             font-size: 0.875rem;
         }
 
+        /* Floating Action Buttons */
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 999;
+        }
+
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .floating-btn.whatsapp {
+            background: var(--whatsapp-green);
+        }
+
+        .floating-btn.phone {
+            background: var(--phone-blue);
+        }
+
+        .floating-btn.google-reviews {
+            background: #4285f4;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .floating-btn.google-reviews:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .floating-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--white);
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .hero-visual {
@@ -717,13 +1904,24 @@
                 grid-template-columns: 1fr;
             }
 
-            .gallery-grid {
-                grid-template-columns: 1fr;
+            .service-card {
+                height: 300px; /* Slightly smaller on mobile */
             }
 
-            .gallery-item:nth-child(1),
-            .gallery-item:nth-child(4) {
-                grid-column: span 1;
+            .service-main-title {
+                font-size: 1.2rem;
+            }
+
+            .service-details-overlay {
+                padding: 1.5rem;
+            }
+
+            .service-header-details h3 {
+                font-size: 1.3rem;
+            }
+
+            .service-description-text {
+                font-size: 0.9rem;
             }
 
             .contact-container {
@@ -739,6 +1937,15 @@
 
             .footer-social {
                 justify-content: center;
+            }
+
+            .all-packages-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .traveler-tile {
+                width: 150px;
+                height: 120px;
             }
         }
 
@@ -780,11 +1987,19 @@
                 font-size: 1.2rem;
             }
 
+            .trust-badge {
+                left: 2rem;
+                bottom: 2rem;
+                padding: 0.75rem 1.5rem;
+            }
+
             .about,
             .services,
             .destinations,
             .gallery,
-            .contact {
+            .contact,
+            .packages,
+            .fleet {
                 padding: 4rem 2rem;
             }
 
@@ -805,155 +2020,31 @@
                 font-size: 1.5rem;
             }
 
-            footer {
-                padding: 3rem 2rem;
+            .modern-packages-grid,
+            .fleet-grid {
+                grid-template-columns: 1fr;
             }
-        }
 
-        /* Google Reviews Banner */
-        .google-reviews-banner {
-            background: var(--black);
-            color: var(--white);
-            padding: 2rem 4rem;
-            position: relative;
-            overflow: hidden;
-        }
+            .modern-package-card {
+                height: 350px; /* Slightly smaller on mobile */
+            }
 
-        .reviews-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 3rem;
-        }
+            .package-main-title {
+                font-size: 1.3rem;
+            }
 
-        .reviews-left {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
+            .package-details-overlay {
+                padding: 1.5rem;
+            }
 
-        .google-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
+            .package-header-details h3 {
+                font-size: 1.4rem;
+            }
 
-        .google-logo svg {
-            width: 30px;
-            height: 30px;
-        }
+            .route-text-overlay {
+                font-size: 0.9rem;
+            }
 
-        .rating-display {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .stars {
-            display: flex;
-            gap: 0.25rem;
-            color: var(--gold);
-        }
-
-        .rating-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .rating-text {
-            opacity: 0.8;
-            font-size: 0.9rem;
-        }
-
-        .review-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 2rem;
-            background: var(--white);
-            color: var(--black);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .review-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
-            border-color: var(--black);
-        }
-
-        /* Reviews Section */
-        .reviews-section {
-            padding: 5rem 4rem;
-            background: var(--light-gray);
-        }
-
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .review-card {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-        }
-
-        .review-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .review-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .reviewer-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--black);
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .reviewer-info h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .review-stars {
-            display: flex;
-            gap: 0.1rem;
-            color: #fbbf24;
-            font-size: 0.9rem;
-        }
-
-        .review-text {
-            color: var(--gray);
-            line-height: 1.6;
-            font-style: italic;
-        }
-
-        @media (max-width: 768px) {
             .google-reviews-banner {
                 padding: 1.5rem 2rem;
             }
@@ -970,6 +2061,81 @@
 
             .reviews-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .floating-buttons {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .floating-google-reviews {
+                bottom: 20px;
+                left: 20px;
+            }
+
+            .floating-btn {
+                width: 50px;
+                height: 50px;
+            }
+
+            .floating-btn.google-reviews {
+                width: 50px;
+                height: 50px;
+            }
+
+            .floating-btn svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .gallery-main-image {
+                height: 300px;
+            }
+
+            .gallery-nav {
+                width: 40px;
+                height: 40px;
+            }
+
+            footer {
+                padding: 3rem 2rem;
+            }
+
+            .all-packages-container {
+                width: 95%;
+                margin: 1rem;
+            }
+
+            .all-packages-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .modal-header {
+                padding: 1.5rem;
+            }
+
+            .modal-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .traveler-tile {
+                width: 120px;
+                height: 100px;
+            }
+
+            .gallery-scroll-btn {
+                width: 35px;
+                height: 35px;
+            }
+
+            .travelers-modal-main-image {
+                height: 300px;
+            }
+
+            .travelers-modal-nav {
+                width: 40px;
+                height: 40px;
             }
         }
 
@@ -989,67 +2155,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--gray);
         }
-
-        /* Floating Action Buttons */
-        .floating-buttons {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 999;
-        }
-
-        .floating-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            text-decoration: none;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            font-size: 1.5rem;
-        }
-
-        .floating-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .floating-btn.whatsapp {
-            background: var(--whatsapp-green);
-        }
-
-        .floating-btn.phone {
-            background: var(--phone-blue);
-        }
-
-        .floating-btn svg {
-            width: 28px;
-            height: 28px;
-            fill: var(--white);
-        }
-
-        @media (max-width: 768px) {
-            .floating-buttons {
-                bottom: 20px;
-                right: 20px;
-            }
-
-            .floating-btn {
-                width: 50px;
-                height: 50px;
-            }
-
-            .floating-btn svg {
-                width: 24px;
-                height: 24px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -1057,7 +2162,6 @@
     <nav id="navbar">
         <div class="nav-container">
             <a href="#home">
-                <!-- Update with direct image link from imgbb -->
                 <img src="https://i.ibb.co/ccxLCTcQ/Black.png" alt="Centaur Travel Planners" class="logo" 
                      onerror="this.src='https://drive.google.com/uc?export=view&id=1PEQWk5G8Su10bNcdAb77rXUQn5hHQ7Hb'">
             </a>
@@ -1065,6 +2169,8 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="#fleet">Our Fleet</a></li>
                 <li><a href="#destinations">Destinations</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="https://share.google/cg6uSUi9KYhbVtCRw" target="_blank" style="display: flex; align-items: center; gap: 0.5rem;">
@@ -1103,7 +2209,7 @@
         </div>
         <div class="hero-visual">
             <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop" 
-                 alt="Travel Adventure" class="hero-image">
+                 alt="Travel Adventure" class="hero-image hero-image-parallax">
         </div>
         
         <a href="https://share.google/cg6uSUi9KYhbVtCRw" target="_blank" class="trust-badge">
@@ -1116,6 +2222,498 @@
             <div class="stars">★★★★★</div>
             <span class="trust-badge-text">5.0 Google Reviews</span>
         </a>
+    </section>
+
+    <!-- Top Packages Section - IMPROVED -->
+    <section class="packages animate-on-scroll" id="packages">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Top Selling Packages</h2>
+                <p class="section-subtitle">
+                    Our most popular and expertly crafted Kerala tour packages
+                </p>
+            </div>
+            
+            <div class="modern-packages-grid">
+                <div class="modern-package-card" onclick="selectPackage('Kerala Tour Package', '3 Nights / 4 Days', 'Cochin - Munnar - Alleppey - Cochin')">
+                    <div class="package-image-container">
+                        <img src="https://i.ibb.co/xSwtBZTs/3rAlpy.jpg?q=80&w=2070&auto=format&fit=crop" alt="Kerala Backwaters" class="modern-package-image">
+                        
+                        <!-- Always visible title overlay -->
+                        <div class="package-title-overlay">
+                            <div class="package-main-title">Kerala Tour Package</div>
+                            <div class="package-duration">3 Nights / 4 Days</div>
+                        </div>
+                        
+                        <!-- Details overlay on hover -->
+                        <div class="package-details-overlay">
+                            <div class="package-header-details">
+                                <h3>Kerala Tour Package</h3>
+                                <div class="package-duration-badge">3 Nights / 4 Days</div>
+                            </div>
+                            
+                            <div class="package-route-details">
+                                <div class="route-label-overlay">Route:</div>
+                                <div class="route-text-overlay">Cochin → Munnar → Alleppey → Cochin</div>
+                            </div>
+                            
+                            <div class="package-highlights-overlay">
+                                <div class="highlight-item-overlay">🏔️ Hill Stations</div>
+                                <div class="highlight-item-overlay">🚤 Houseboats</div>
+                                <div class="highlight-item-overlay">🌿 Backwaters</div>
+                            </div>
+                            
+                            <div class="package-price-overlay">Contact Us for Best Price</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modern-package-card" onclick="selectPackage('Amazing Kerala Tour', '4 Nights / 5 Days', 'Cochin - Munnar - Thekkady - Alleppey - Cochin')">
+                    <div class="package-image-container">
+                        <img src="https://i.ibb.co/Gv17H2Jx/DISCOVER-THEKKADY-1024x368.webp?q=80&w=2069&auto=format&fit=crop" alt="Kerala Hills" class="modern-package-image">
+                        
+                        <div class="package-title-overlay">
+                            <div class="package-main-title">Amazing Kerala Tour</div>
+                            <div class="package-duration">4 Nights / 5 Days</div>
+                        </div>
+                        
+                        <div class="package-details-overlay">
+                            <div class="package-header-details">
+                                <h3>Amazing Kerala Tour</h3>
+                                <div class="package-duration-badge">4 Nights / 5 Days</div>
+                            </div>
+                            
+                            <div class="package-route-details">
+                                <div class="route-label-overlay">Route:</div>
+                                <div class="route-text-overlay">Cochin → Munnar → Thekkady → Alleppey → Cochin</div>
+                            </div>
+                            
+                            <div class="package-highlights-overlay">
+                                <div class="highlight-item-overlay">🦌 Wildlife</div>
+                                <div class="highlight-item-overlay">🌊 Backwaters</div>
+                                <div class="highlight-item-overlay">☕ Tea Gardens</div>
+                            </div>
+                            
+                            <div class="package-price-overlay">Contact Us for Best Price</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modern-package-card" onclick="selectPackage('Magical Kerala Tour', '5 Nights / 6 Days', 'Cochin - Munnar - Thekkady - Alleppey - Cochin')">
+                    <div class="package-image-container">
+                        <img src="https://i.ibb.co/YsPvfQg/magicalkerala.jpg?q=80&w=2070&auto=format&fit=crop" alt="Kerala Tea Gardens" class="modern-package-image">
+                        
+                        <div class="package-title-overlay">
+                            <div class="package-main-title">Magical Kerala Tour</div>
+                            <div class="package-duration">5 Nights / 6 Days</div>
+                        </div>
+                        
+                        <div class="package-details-overlay">
+                            <div class="package-header-details">
+                                <h3>Magical Kerala Tour</h3>
+                                <div class="package-duration-badge">5 Nights / 6 Days</div>
+                            </div>
+                            
+                            <div class="package-route-details">
+                                <div class="route-label-overlay">Route:</div>
+                                <div class="route-text-overlay">Cochin → Munnar → Thekkady → Alleppey → Cochin</div>
+                            </div>
+                            
+                            <div class="package-highlights-overlay">
+                                <div class="highlight-item-overlay">🏰 Heritage</div>
+                                <div class="highlight-item-overlay">🎭 Culture</div>
+                                <div class="highlight-item-overlay">🌺 Nature</div>
+                            </div>
+                            
+                            <div class="package-price-overlay">Contact Us for Best Price</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modern-package-card" onclick="selectPackage('Incredible Kerala Tour', '6 Nights / 7 Days', 'Cochin - Munnar - Thekkady - Kovalam - Alleppey - Cochin')">
+                    <div class="package-image-container">
+                        <img src="https://i.ibb.co/XxZvbR7N/kovalam.jpg?q=80&w=2070&auto=format&fit=crop" alt="Kerala Beaches" class="modern-package-image">
+                        
+                        <div class="package-title-overlay">
+                            <div class="package-main-title">Incredible Kerala Tour</div>
+                            <div class="package-duration">6 Nights / 7 Days</div>
+                        </div>
+                        
+                        <div class="package-details-overlay">
+                            <div class="package-header-details">
+                                <h3>Incredible Kerala Tour</h3>
+                                <div class="package-duration-badge">6 Nights / 7 Days</div>
+                            </div>
+                            
+                            <div class="package-route-details">
+                                <div class="route-label-overlay">Route:</div>
+                                <div class="route-text-overlay">Cochin → Munnar → Thekkady → Kovalam → Alleppey → Cochin</div>
+                            </div>
+                            
+                            <div class="package-highlights-overlay">
+                                <div class="highlight-item-overlay">🏖️ Beaches</div>
+                                <div class="highlight-item-overlay">💆‍♀️ Ayurveda</div>
+                                <div class="highlight-item-overlay">🎣 Water Sports</div>
+                            </div>
+                            
+                            <div class="package-price-overlay">Contact Us for Best Price</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modern-package-card" onclick="selectPackage('Grand Kerala Tour', '7 Nights / 8 Days', 'Cochin - Munnar - Thekkady - Alleppey - Kovalam - Kanyakumari - Trivandrum')">
+                    <div class="package-image-container">
+                        <img src="https://i.ibb.co/Jw84qg6J/sunrise-in-kanyakumari.webp?q=80&w=1887&auto=format&fit=crop" alt="Kanyakumari Sunset" class="modern-package-image">
+                        
+                        <div class="package-title-overlay">
+                            <div class="package-main-title">Grand Kerala Tour</div>
+                            <div class="package-duration">7 Nights / 8 Days</div>
+                        </div>
+                        
+                        <div class="package-details-overlay">
+                            <div class="package-header-details">
+                                <h3>Grand Kerala Tour</h3>
+                                <div class="package-duration-badge">7 Nights / 8 Days</div>
+                            </div>
+                            
+                            <div class="package-route-details">
+                                <div class="route-label-overlay">Route:</div>
+                                <div class="route-text-overlay">Cochin → Munnar → Thekkady → Alleppey → Kovalam → Kanyakumari → Trivandrum</div>
+                            </div>
+                            
+                            <div class="package-highlights-overlay">
+                                <div class="highlight-item-overlay">🌅 Sunrise Point</div>
+                                <div class="highlight-item-overlay">⛪ Temples</div>
+                                <div class="highlight-item-overlay">🎨 Art Forms</div>
+                            </div>
+                            
+                            <div class="package-price-overlay">Contact Us for Best Price</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modern-package-card" onclick="selectPackage('Complete Kerala Tour', '9 Nights / 10 Days', 'Cochin - Munnar - Thekkady - Alleppey - Kumarakom - Kovalam - Kanyakumari - Trivandrum')">
+                    <div class="package-image-container">
+                        <img src="https://i.ibb.co/NdtbpYnv/Kerala-Main-730x410.jpg?q=80&w=2070&auto=format&fit=crop" alt="Kumarakom Backwaters" class="modern-package-image">
+                        
+                        <div class="package-title-overlay">
+                            <div class="package-main-title">Complete Kerala Tour</div>
+                            <div class="package-duration">9 Nights / 10 Days</div>
+                        </div>
+                        
+                        <div class="package-details-overlay">
+                            <div class="package-header-details">
+                                <h3>Complete Kerala Tour</h3>
+                                <div class="package-duration-badge">9 Nights / 10 Days ⭐ Bestseller</div>
+                            </div>
+                            
+                            <div class="package-route-details">
+                                <div class="route-label-overlay">Complete Route:</div>
+                                <div class="route-text-overlay">Cochin → Munnar → Thekkady → Alleppey → Kumarakom → Kovalam → Kanyakumari → Trivandrum</div>
+                            </div>
+                            
+                            <div class="package-highlights-overlay">
+                                <div class="highlight-item-overlay">🏆 Most Popular</div>
+                                <div class="highlight-item-overlay">📸 Photography</div>
+                                <div class="highlight-item-overlay">🍽️ Food Tours</div>
+                            </div>
+                            
+                            <div class="package-price-overlay">Contact Us for Best Price</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modern-package-card" onclick="selectPackage('Kerala Explorer Tour', '8 Nights / 9 Days', 'Kochi - Alleppey - Kumarakom - Calicut - Wayanad - Coorg - Kochi')">
+                    <div class="package-image-container">
+                        <img src="https://i.ibb.co/67kKGfDD/Coorg-tourism.jpg?q=80&w=2070&auto=format&fit=crop" alt="Wayanad Hills" class="modern-package-image">
+                        
+                        <div class="package-title-overlay">
+                            <div class="package-main-title">Kerala Explorer Tour</div>
+                            <div class="package-duration">8 Nights / 9 Days</div>
+                        </div>
+                        
+                        <div class="package-details-overlay">
+                            <div class="package-header-details">
+                                <h3>Kerala Explorer Tour</h3>
+                                <div class="package-duration-badge">8 Nights / 9 Days</div>
+                            </div>
+                            
+                            <div class="package-route-details">
+                                <div class="route-label-overlay">Multi-State Route:</div>
+                                <div class="route-text-overlay">Kochi → Alleppey → Kumarakom → Calicut → Wayanad → Coorg → Kochi (Airport Drop)</div>
+                            </div>
+                            
+                            <div class="package-highlights-overlay">
+                                <div class="highlight-item-overlay">🌲 Hill Stations</div>
+                                <div class="highlight-item-overlay">☕ Coffee Estates</div>
+                                <div class="highlight-item-overlay">🦋 Wildlife</div>
+                            </div>
+                            
+                            <div class="package-price-overlay">Contact Us for Best Price</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fleet Section -->
+    <section class="fleet animate-on-scroll" id="fleet">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Fleet</h2>
+                <p class="section-subtitle">
+                    Travel in comfort and style with our premium vehicle collection
+                </p>
+            </div>
+            
+            <div class="fleet-categories">
+                <button class="fleet-filter active" data-category="all">All Vehicles</button>
+                <button class="fleet-filter" data-category="suv">SUVs</button>
+                <button class="fleet-filter" data-category="van">Vans</button>
+                <button class="fleet-filter" data-category="bus">Buses</button>
+            </div>
+            
+            <div class="fleet-grid">
+                <!-- SUV Category -->
+                <div class="vehicle-card" data-category="suv" onclick="openVehicleGallery('Toyota Hycross', [
+                    'https://i.ibb.co/mfvGqhY/Whats-App-Image-2025-08-07-at-00-22-34-b3bb7f27.jpg?q=80&w=2070&auto=format&fit=crop',
+                    'https://i.ibb.co/qYhGkQV2/Whats-App-Image-2025-08-07-at-00-22-33-9f29db16.jpg?q=80&w=2070&auto=format&fit=crop',
+                    'https://i.ibb.co/HfMG79yt/Whats-App-Image-2025-08-07-at-00-22-34-6df4539b.jpg?q=80&w=2070&auto=format&fit=crop',
+                    'https://i.ibb.co/HTZ0b989/Whats-App-Image-2025-08-07-at-00-22-34-b6b6636d.jpg?q=80&w=2067&auto=format&fit=crop'
+                ])">
+                    <div class="vehicle-image">
+                        <img src="https://i.ibb.co/mFcmwkbj/innova-hycross-exterior-right-side-view.jpg?q=80&w=2070&auto=format&fit=crop" alt="Toyota Hycross">
+                        <span class="vehicle-type">SUV</span>
+                    </div>
+                    <div class="vehicle-info">
+                        <h3 class="vehicle-name">Toyota Hycross</h3>
+                        <div class="vehicle-features">
+                            <span class="vehicle-feature">👥 8 Passengers</span>
+                            <span class="vehicle-feature">🧳 6 Luggage</span>
+                            <span class="vehicle-feature">❄️ AC</span>
+                        </div>
+                        <div class="vehicle-book">View Gallery & Book</div>
+                    </div>
+                </div>
+
+                <!-- Van Category -->
+                <div class="vehicle-card" data-category="van" onclick="openVehicleGallery('Force Urbania', [
+                    'https://i.ibb.co/p6gC820r/IMG-20240131-WA0069.jpg?q=80&w=2076&auto=format&fit=crop',
+                    'https://i.ibb.co/99Xm8gVF/IMG-20240601-WA0002.jpg?q=80&w=2070&auto=format&fit=crop',
+                    'https://i.ibb.co/HTh9V5GB/IMG-20240611-WA0082.jpg?q=80&w=2070&auto=format&fit=crop',
+                    'https://i.ibb.co/G3v2pMDB/Whats-App-Image-2025-08-07-at-00-22-30-6b5d3708.jpg?q=80&w=2074&auto=format&fit=crop'
+                ])">
+                    <div class="vehicle-image">
+                        <img src="https://i.ibb.co/HTh9V5GB/IMG-20240611-WA0082.jpg?q=80&w=2070&auto=format&fit=crop" alt="Force Urbania">
+                        <span class="vehicle-type">Van</span>
+                    </div>
+                    <div class="vehicle-info">
+                        <h3 class="vehicle-name">Force Urbania</h3>
+                        <div class="vehicle-features">
+                            <span class="vehicle-feature">👥 12 Passengers</span>
+                            <span class="vehicle-feature">🧳 10 Luggage</span>
+                            <span class="vehicle-feature">❄️ AC</span>
+                            <span class="vehicle-feature">🛣️ Long Distance</span>
+                        </div>
+                        <div class="vehicle-book">View Gallery & Book</div>
+                    </div>
+                </div>
+
+                <!-- Bus Category - Coming Soon -->
+                <div class="vehicle-card" data-category="bus" onclick="showComingSoon()">
+                    <div class="vehicle-image">
+                        <img src="https://i.ibb.co/7xY055Sx/Whats-App-Image-2025-08-07-at-00-22-35-4d15ff8e.jpg?q=80&w=2070&auto=format&fit=crop" alt="Luxury Bus - Coming Soon">
+                        <span class="vehicle-type">Bus</span>
+                        <div class="coming-soon-badge">Coming Soon</div>
+                    </div>
+                    <div class="vehicle-info">
+                        <h3 class="vehicle-name">Luxury Bus</h3>
+                        <div class="vehicle-features">
+                            <span class="vehicle-feature">👥 35+ Passengers</span>
+                            <span class="vehicle-feature">🧳 Large Luggage</span>
+                            <span class="vehicle-feature">❄️ AC</span>
+                            <span class="vehicle-feature">🚌 Group Travel</span>
+                        </div>
+                        <div class="vehicle-book coming-soon">Coming Soon</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicle Gallery Modal - IMPROVED -->
+    <div class="image-gallery-modal" id="vehicleGalleryModal" onclick="closeVehicleGallery()">
+        <div class="gallery-container" onclick="event.stopPropagation()">
+            <div class="gallery-header">
+                <h3 class="gallery-title" id="galleryTitle">Vehicle Gallery</h3>
+                <span class="gallery-counter" id="galleryCounter">1 / 4</span>
+                <div class="close-gallery" onclick="closeVehicleGallery()">✕</div>
+            </div>
+            <div class="gallery-main-image">
+                <img id="mainGalleryImage" src="" alt="Vehicle Image">
+                <button class="gallery-nav prev" onclick="navigateGallery(-1)">‹</button>
+                <button class="gallery-nav next" onclick="navigateGallery(1)">›</button>
+            </div>
+            <div class="gallery-thumbnails" id="galleryThumbnails">
+                <!-- Thumbnails will be dynamically inserted here -->
+            </div>
+            <div class="gallery-actions">
+                <a href="#contact" class="gallery-book-btn" id="galleryBookBtn" onclick="closeVehicleGallery()">Book This Vehicle</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about animate-on-scroll" id="about">
+        <div class="about-container">
+            <div class="about-content">
+                <h2>We're More Than Travel Enthusiasts</h2>
+                <p>
+                    At Centaur Travel Planners, we're your dream weavers. We redefine travel by 
+                    transforming your aspirations into unforgettable journeys.
+                </p>
+                <p>
+                    With deep roots in Kerala and expertise across India, we craft personalized 
+                    experiences that reflect your unique vision. No cookie-cutter trips here – 
+                    every journey is as individual as you are.
+                </p>
+                <div class="about-stats">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Happy Travelers</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Destinations</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">2+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                </div>
+            </div>
+            <div class="about-visual">
+                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1935&auto=format&fit=crop" 
+                     alt="Travel Planning" style="width: 100%; height: 500px; object-fit: cover;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section - SIMPLIFIED WITH IMAGES -->
+     <section class="services animate-on-scroll" id="services">
+        <div class="services-container">
+            <div class="section-header">
+                <h2 class="section-title">What We Do</h2>
+                <p class="section-subtitle">
+                    Transforming travel dreams into curated journeys across India and beyond
+                </p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-number">01</div>
+                    <div>
+                        <h3 class="service-title">Bespoke Itineraries</h3>
+                        <div class="service-keywords">
+                            <span class="keyword">Personalized</span>
+                            <span class="keyword">Custom Routes</span>
+                            <span class="keyword">Tailored</span>
+                        </div>
+                        <p class="service-description">
+                            Every journey crafted to reflect your individuality and travel aspirations. 
+                            We create personalized experiences that match your unique preferences, 
+                            interests, and travel style.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-number">02</div>
+                    <div>
+                        <h3 class="service-title">Authentic Experiences</h3>
+                        <div class="service-keywords">
+                            <span class="keyword">Local Culture</span>
+                            <span class="keyword">Hidden Gems</span>
+                            <span class="keyword">Immersive</span>
+                        </div>
+                        <p class="service-description">
+                            Immerse yourself in the soul of each destination with local insights. 
+                            Discover hidden gems, cultural treasures, and authentic experiences 
+                            off the beaten path.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-number">03</div>
+                    <div>
+                        <h3 class="service-title">Premium Hospitality</h3>
+                        <div class="service-keywords">
+                            <span class="keyword">Luxury</span>
+                            <span class="keyword">Comfort</span>
+                            <span class="keyword">Excellence</span>
+                        </div>
+                        <p class="service-description">
+                            Seamless travel with attention to every detail from start to finish. 
+                            Experience luxury, comfort, and exceptional service throughout 
+                            your entire journey.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-number">04</div>
+                    <div>
+                        <h3 class="service-title">Adventure Planning</h3>
+                        <div class="service-keywords">
+                            <span class="keyword">Thrilling</span>
+                            <span class="keyword">Outdoor</span>
+                            <span class="keyword">Exciting</span>
+                        </div>
+                        <p class="service-description">
+                            Thrilling experiences for the adventurous soul seeking unique journeys. 
+                            From mountain treks to water sports, we plan exciting adventures 
+                            tailored to your courage level.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-number">05</div>
+                    <div>
+                        <h3 class="service-title">Cultural Immersion</h3>
+                        <div class="service-keywords">
+                            <span class="keyword">Traditions</span>
+                            <span class="keyword">Heritage</span>
+                            <span class="keyword">Authentic</span>
+                        </div>
+                        <p class="service-description">
+                            Deep dive into local traditions, cuisine, and authentic cultural exchanges. 
+                            Experience destinations like a local, not just a tourist, with 
+                            meaningful connections.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-number">06</div>
+                    <div>
+                        <h3 class="service-title">24/7 Support</h3>
+                        <div class="service-keywords">
+                            <span class="keyword">Available</span>
+                            <span class="keyword">Reliable</span>
+                            <span class="keyword">Dedicated</span>
+                        </div>
+                        <p class="service-description">
+                            Round-the-clock assistance ensuring peace of mind throughout your journey. 
+                            Our dedicated team is always available when you need us most, 
+                            anywhere you are.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Reviews Section -->
@@ -1163,11 +2761,7 @@ Standout Features:
 - Insider food recommendations
 - Cozy travel arrangements
 Wholehearted Recommendation:
-I highly recommend Centaur Travel Planners for a stress-free, unforgettable travel experience. Their dedication to customer satisfaction and passion for travel shine through in every aspect.
-Tips for Future Travelers:
-- Clearly communicate your preferences and expectations
-- Take advantage of their expert recommendations
-Thank you, Centaur Travel Planners, for an unforgettable adventure!"
+I highly recommend Centaur Travel Planners for a stress-free, unforgettable travel experience. Their dedication to customer satisfaction and passion for travel shine through in every aspect."
                     </p>
                 </div>
                 
@@ -1180,21 +2774,12 @@ Thank you, Centaur Travel Planners, for an unforgettable adventure!"
                         </div>
                     </div>
                     <p class="review-text">
-                        ""I recently had the pleasure of using Urbania of Centaur for a pilgrimage to Rameswaram and I was thoroughly impressed! The bus was clean, comfortable, and well-maintained. Our driver Neeraj was friendly, knowledgeable, and navigated through traffic with ease even during night ride.
+                        "I recently had the pleasure of using Urbania of Centaur for a pilgrimage to Rameswaram and I was thoroughly impressed! The bus was clean, comfortable, and well-maintained. Our driver Neeraj was friendly, knowledgeable, and navigated through traffic with ease even during night ride.
 Apart from his driving skills he is a very good tour guide providing insightful commentary about the route and various temples . The itinerary was well-planned, allowing us to visit all the major attractions including temples without feeling rushed.
 The service was top-notch, and the management and staff of Centaur were accommodating and helpful. I appreciated the flexibility to hop on and off at various stops, which allowed our aged companions to explore various temples.
-Overall, I'd highly recommend Centaur Travel Planners to anyone looking for a convenient and enjoyable way for a pilgrimage or tour. Great value for money!""
+Overall, I'd highly recommend Centaur Travel Planners to anyone looking for a convenient and enjoyable way for a pilgrimage or tour. Great value for money!"
                     </p>
                 </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 3rem;">
-                <a href="https://share.google/cg6uSUi9KYhbVtCRw" target="_blank" class="review-cta" style="background: var(--black); color: var(--white);">
-                    Read More Reviews on Google
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M7 17L17 7M17 7H7M17 7V17"/>
-                    </svg>
-                </a>
             </div>
         </div>
     </section>
@@ -1229,104 +2814,12 @@ Overall, I'd highly recommend Centaur Travel Planners to anyone looking for a co
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about animate-on-scroll" id="about">
-        <div class="about-container">
-            <div class="about-content">
-                <h2>We're More Than Travel Enthusiasts</h2>
-                <p>
-                    At Centaur Travel Planners, we're your dream weavers. We redefine travel by 
-                    transforming your aspirations into unforgettable journeys.
-                </p>
-                <p>
-                    With deep roots in Kerala and expertise across India, we craft personalized 
-                    experiences that reflect your unique vision. No cookie-cutter trips here – 
-                    every journey is as individual as you are.
-                </p>
-                <div class="about-stats">
-                    <div class="stat">
-                        <span class="stat-number">500+</span>
-                        <span class="stat-label">Happy Travelers</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">50+</span>
-                        <span class="stat-label">Destinations</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">2+</span>
-                        <span class="stat-label">Years Experience</span>
-                    </div>
-                </div>
-                <div style="margin-top: 2rem;">
-                    <a href="https://share.google/cg6uSUi9KYhbVtCRw" target="_blank" class="google-review-btn" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--black); color: var(--white); text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; border: 2px solid var(--black);" onmouseover="this.style.background='var(--white)'; this.style.color='var(--black)';" onmouseout="this.style.background='var(--black)'; this.style.color='var(--white)';">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                        </svg>
-                        <span>5.0 ★★★★★ Google Reviews</span>
-                    </a>
-                </div>
-            </div>
-            <div class="about-visual">
-                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1935&auto=format&fit=crop" 
-                     alt="Travel Planning" style="width: 100%; height: 500px; object-fit: cover;">
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services animate-on-scroll" id="services">
-        <div class="services-container">
-            <div class="section-header">
-                <h2 class="section-title">What We Do</h2>
-                <p class="section-subtitle">
-                    Transforming travel dreams into curated journeys across India and beyond
-                </p>
-            </div>
-            
-            <div class="services-grid">
-                <div class="service-card">
-                    <span class="service-number">01</span>
-                    <h3>Bespoke Itineraries</h3>
-                    <p>Every journey crafted to reflect your individuality and travel aspirations</p>
-                </div>
-                <div class="service-card">
-                    <span class="service-number">02</span>
-                    <h3>Authentic Experiences</h3>
-                    <p>Immerse yourself in the soul of each destination with local insights</p>
-                </div>
-                <div class="service-card">
-                    <span class="service-number">03</span>
-                    <h3>Premium Hospitality</h3>
-                    <p>Seamless travel with attention to every detail from start to finish</p>
-                </div>
-                <div class="service-card">
-                    <span class="service-number">04</span>
-                    <h3>Adventure Planning</h3>
-                    <p>Thrilling experiences for the adventurous soul seeking unique journeys</p>
-                </div>
-                <div class="service-card">
-                    <span class="service-number">05</span>
-                    <h3>Cultural Immersion</h3>
-                    <p>Deep dive into local traditions, cuisine, and authentic cultural exchanges</p>
-                </div>
-                <div class="service-card">
-                    <span class="service-number">06</span>
-                    <h3>24/7 Support</h3>
-                    <p>Round-the-clock assistance ensuring peace of mind throughout your journey</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews Section -->
-    
     <!-- Destinations Section -->
     <section class="destinations animate-on-scroll" id="destinations">
         <div class="section-header">
-            <h2 class="section-title">Top Destinations</h2>
+            <h2 class="section-title clickable-title" onclick="showAllPackagesModal()">
+                Other Top Packages
+            </h2>
             <p class="section-subtitle">
                 From serene beaches to majestic mountains, discover India's diverse beauty
             </p>
@@ -1334,92 +2827,214 @@ Overall, I'd highly recommend Centaur Travel Planners to anyone looking for a co
         
         <div class="destinations-marquee">
             <div class="marquee-content">
-                <span class="destination-item">KERALA BACKWATERS</span>
+                <span class="destination-item" onclick="selectDestination('Goa Beaches')">GOA BEACHES</span>
                 <span class="destination-dot"></span>
-                <span class="destination-item">GOA BEACHES</span>
+                <span class="destination-item" onclick="selectDestination('Rajasthan Heritage')">RAJASTHAN HERITAGE</span>
                 <span class="destination-dot"></span>
-                <span class="destination-item">RAJASTHAN HERITAGE</span>
+                <span class="destination-item" onclick="selectDestination('Himalayan Retreats')">HIMALAYAN RETREATS</span>
                 <span class="destination-dot"></span>
-                <span class="destination-item">HIMALAYAN RETREATS</span>
+                <span class="destination-item" onclick="selectDestination('Andaman Islands')">ANDAMAN ISLANDS</span>
                 <span class="destination-dot"></span>
-                <span class="destination-item">ANDAMAN ISLANDS</span>
+                <span class="destination-item" onclick="selectDestination('Kashmir Valley')">KASHMIR VALLEY</span>
                 <span class="destination-dot"></span>
-                <span class="destination-item">KASHMIR VALLEY</span>
+                <span class="destination-item" onclick="selectDestination('Ladakh Adventures')">LADAKH ADVENTURES</span>
                 <span class="destination-dot"></span>
-                <span class="destination-item">LADAKH ADVENTURES</span>
+                <span class="destination-item" onclick="selectDestination('North East Wonders')">NORTH EAST WONDERS</span>
                 <span class="destination-dot"></span>
-                <span class="destination-item">NORTH EAST WONDERS</span>
+                <span class="destination-item" onclick="selectDestination('Mumbai Metropolis')">MUMBAI METROPOLIS</span>
                 <span class="destination-dot"></span>
-                <span class="destination-item">MUMBAI METROPOLIS</span>
+                <span class="destination-item" onclick="selectDestination('Delhi Heritage')">DELHI HERITAGE</span>
                 <span class="destination-dot"></span>
-                <!-- Duplicate for seamless loop -->
-                <span class="destination-item">KERALA BACKWATERS</span>
+                <span class="destination-item" onclick="selectDestination('Agra Wonders')">AGRA WONDERS</span>
                 <span class="destination-dot"></span>
-                <span class="destination-item">GOA BEACHES</span>
-                <span class="destination-dot"></span>
-                <span class="destination-item">RAJASTHAN HERITAGE</span>
-                <span class="destination-dot"></span>
-                <span class="destination-item">HIMALAYAN RETREATS</span>
-                <span class="destination-dot"></span>
-                <span class="destination-item">ANDAMAN ISLANDS</span>
-                <span class="destination-dot"></span>
-                <span class="destination-item">KASHMIR VALLEY</span>
-                <span class="destination-dot"></span>
-                <span class="destination-item">LADAKH ADVENTURES</span>
-                <span class="destination-dot"></span>
-                <span class="destination-item">NORTH EAST WONDERS</span>
-                <span class="destination-dot"></span>
-                <span class="destination-item">MUMBAI METROPOLIS</span>
+                <span class="destination-item" onclick="selectDestination('Golden Triangle')">GOLDEN TRIANGLE</span>
                 <span class="destination-dot"></span>
             </div>
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section class="gallery animate-on-scroll" id="gallery">
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=2070&auto=format&fit=crop" 
-                     alt="Kerala Backwaters" class="gallery-image">
-                <div class="gallery-overlay">
-                    <h3 class="gallery-title">Kerala Backwaters</h3>
-                    <p>Experience tranquility in God's Own Country</p>
-                </div>
+    <!-- All Packages Modal -->
+    <div class="all-packages-modal" id="allPackagesModal" onclick="closeAllPackagesModal()">
+        <div class="all-packages-container" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2>All Travel Packages</h2>
+                <button class="close-modal" onclick="closeAllPackagesModal()">✕</button>
             </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=2070&auto=format&fit=crop" 
-                     alt="Himalayan Mountains" class="gallery-image">
-                <div class="gallery-overlay">
-                    <h3 class="gallery-title">Himalayan Retreats</h3>
-                    <p>Majestic peaks and spiritual journeys</p>
+            <div class="all-packages-grid">
+                <div class="destination-package-card" onclick="selectDestinationPackage('Goa Beach Paradise', 'Experience pristine beaches and vibrant nightlife in Goa')">
+                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?q=80&w=2070&auto=format&fit=crop" alt="Goa Beaches">
+                    <div class="package-overlay">
+                        <h3>Goa Beach Paradise</h3>
+                        <p>5 Days of sun, sand and serenity</p>
+                    </div>
                 </div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1506461883276-594a12b11cf3?q=80&w=2070&auto=format&fit=crop" 
-                     alt="Taj Mahal" class="gallery-image">
-                <div class="gallery-overlay">
-                    <h3 class="gallery-title">Heritage Tours</h3>
-                    <p>Discover India's rich cultural legacy</p>
+
+                <div class="destination-package-card" onclick="selectDestinationPackage('Rajasthan Royal Heritage', 'Explore magnificent palaces, forts and desert landscapes')">
+                    <img src="https://images.unsplash.com/photo-1599661262816-1fb9b2e11d9f?q=80&w=2070&auto=format&fit=crop" alt="Rajasthan Palace">
+                    <div class="package-overlay">
+                        <h3>Rajasthan Royal Heritage</h3>
+                        <p>7 Days of royal grandeur</p>
+                    </div>
                 </div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?q=80&w=2070&auto=format&fit=crop" 
-                     alt="Beach Paradise" class="gallery-image">
-                <div class="gallery-overlay">
-                    <h3 class="gallery-title">Beach Escapes</h3>
-                    <p>Pristine shores and tropical paradise</p>
+
+                <div class="destination-package-card" onclick="selectDestinationPackage('Himalayan Adventure', 'Breathtaking mountain views and spiritual experiences')">
+                    <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=80&w=2070&auto=format&fit=crop" alt="Himalayas">
+                    <div class="package-overlay">
+                        <h3>Himalayan Adventure</h3>
+                        <p>8 Days of mountain magic</p>
+                    </div>
                 </div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1609920658906-8223bd289001?q=80&w=2070&auto=format&fit=crop" 
-                     alt="Kashmir Valley" class="gallery-image">
-                <div class="gallery-overlay">
-                    <h3 class="gallery-title">Kashmir Valley</h3>
-                    <p>Paradise on Earth awaits</p>
+
+                <div class="destination-package-card" onclick="selectDestinationPackage('Andaman Island Escape', 'Crystal clear waters and pristine coral reefs')">
+                    <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?q=80&w=2070&auto=format&fit=crop" alt="Andaman Beach">
+                    <div class="package-overlay">
+                        <h3>Andaman Island Escape</h3>
+                        <p>6 Days in tropical paradise</p>
+                    </div>
+                </div>
+
+                <div class="destination-package-card" onclick="selectDestinationPackage('Kashmir Valley Dreams', 'Paradise on Earth with scenic beauty')">
+                    <img src="https://images.unsplash.com/photo-1609920658906-8223bd289001?q=80&w=2070&auto=format&fit=crop" alt="Kashmir Valley">
+                    <div class="package-overlay">
+                        <h3>Kashmir Valley Dreams</h3>
+                        <p>7 Days in paradise</p>
+                    </div>
+                </div>
+
+                <div class="destination-package-card" onclick="selectDestinationPackage('Ladakh High Altitude Adventure', 'Rugged landscapes and Buddhist monasteries')">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop" alt="Ladakh Landscape">
+                    <div class="package-overlay">
+                        <h3>Ladakh High Altitude</h3>
+                        <p>9 Days of adventure</p>
+                    </div>
+                </div>
+
+                <div class="destination-package-card" onclick="selectDestinationPackage('North East Discovery', 'Unexplored beauty and diverse cultures')">
+                    <img src="https://images.unsplash.com/photo-1571115764595-644a1f56a55c?q=80&w=2070&auto=format&fit=crop" alt="North East Hills">
+                    <div class="package-overlay">
+                        <h3>North East Discovery</h3>
+                        <p>10 Days of exploration</p>
+                    </div>
+                </div>
+
+                <div class="destination-package-card" onclick="selectDestinationPackage('Golden Triangle Classic', 'Delhi, Agra, Jaipur - The iconic trio')">
+                    <img src="https://images.unsplash.com/photo-1506461883276-594a12b11cf3?q=80&w=2070&auto=format&fit=crop" alt="Taj Mahal">
+                    <div class="package-overlay">
+                        <h3>Golden Triangle Classic</h3>
+                        <p>6 Days of heritage</p>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Happy Travelers Gallery Section - IMPROVED WITH POPUP FUNCTIONALITY -->
+    <section class="gallery animate-on-scroll" id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Happy Travelers</h2>
+                <p class="section-subtitle">
+                    Memories captured from our amazing journeys with satisfied customers
+                </p>
+            </div>
+        </div>
+        
+        <div class="travelers-gallery-container">
+            <button class="gallery-scroll-btn prev" onclick="scrollTravelers(-1)">‹</button>
+            <div class="travelers-scroll-container" id="travelersContainer">
+                <div class="traveler-tile" onclick="openTravelersGallery(0)">
+                    <img src="https://i.ibb.co/fVHqLyw5/1.webp?q=50&w=200&h=150&auto=format&fit=crop" 
+                         alt="Happy Customer" class="traveler-image"
+                         loading="lazy">
+                </div>
+                
+                <div class="traveler-tile" onclick="openTravelersGallery(1)">
+                    <img src="https://i.ibb.co/v6cH2HHk/2.webp?q=50&w=200&h=150&auto=format&fit=crop" 
+                         alt="Happy Customer" class="traveler-image"
+                         loading="lazy">
+                </div>
+                
+                <div class="traveler-tile" onclick="openTravelersGallery(2)">
+                    <img src="https://i.ibb.co/ymmXtp71/3.webp?q=50&w=200&h=150&auto=format&fit=crop" 
+                         alt="Happy Customer" class="traveler-image"
+                         loading="lazy">
+                </div>
+                
+                <div class="traveler-tile" onclick="openTravelersGallery(3)">
+                    <img src="https://i.ibb.co/V0pnLnXq/4.webp?q=50&w=200&h=150&auto=format&fit=crop" 
+                         alt="Happy Customer" class="traveler-image"
+                         loading="lazy">
+                </div>
+                
+                <div class="traveler-tile" onclick="openTravelersGallery(4)">
+                    <img src="https://i.ibb.co/m5FXYxz8/5.webp?q=50&w=200&h=150&auto=format&fit=crop" 
+                         alt="Happy Customer" class="traveler-image"
+                         loading="lazy">
+                </div>
+                
+                <div class="traveler-tile" onclick="openTravelersGallery(5)">
+                    <img src="https://i.ibb.co/1GTPWZjV/6.webp?q=50&w=200&h=150&auto=format&fit=crop" 
+                         alt="Happy Customer" class="traveler-image"
+                         loading="lazy">
+                </div>
+                
+                <div class="traveler-tile" onclick="openTravelersGallery(6)">
+                    <img src="https://i.ibb.co/wFcm5YM1/7.webp?q=50&w=200&h=150&auto=format&fit=crop" 
+                         alt="Happy Customer" class="traveler-image"
+                         loading="lazy">
+                </div>
+                
+                <div class="traveler-tile" onclick="openTravelersGallery(7)">
+                    <img src="https://i.ibb.co/DPvwVYRm/8.webp?q=50&w=200&h=150&auto=format&fit=crop" 
+                         alt="Happy Customer" class="traveler-image"
+                         loading="lazy">
+                </div>
+                
+                <div class="traveler-tile" onclick="openTravelersGallery(8)">
+                    <img src="https://i.ibb.co/b5S9z9YD/9.webp?q=50&w=200&h=150&auto=format&fit=crop" 
+                         alt="Happy Customer" class="traveler-image"
+                         loading="lazy">
+                </div>
+                
+                <div class="traveler-tile" onclick="openTravelersGallery(9)">
+                    <img src="https://i.ibb.co/PLXCxgY/10.webp?q=50&w=200&h=150&auto=format&fit=crop" 
+                         alt="Happy Customer" class="traveler-image"
+                         loading="lazy">
+                </div>
+                
+                <div class="traveler-tile" onclick="openTravelersGallery(10)">
+                    <img src="https://i.ibb.co/RT5pWDXk/11.webp?q=50&w=200&h=150&auto=format&fit=crop" 
+                         alt="Happy Customer" class="traveler-image"
+                         loading="lazy">
+                </div>
+            </div>
+            <button class="gallery-scroll-btn next" onclick="scrollTravelers(1)">›</button>
+        </div>
     </section>
+
+    <!-- Travelers Gallery Modal - NEW -->
+    <div class="travelers-gallery-modal" id="travelersGalleryModal" onclick="closeTravelersGallery()">
+        <div class="travelers-modal-container" onclick="event.stopPropagation()">
+            <div class="travelers-modal-header">
+                <h3 class="travelers-modal-title">Happy Travelers Gallery</h3>
+                <span class="travelers-modal-counter" id="travelersModalCounter">1 / 11</span>
+                <button class="close-travelers-gallery" onclick="closeTravelersGallery()">✕</button>
+            </div>
+            <div class="travelers-modal-main-image">
+                <img id="mainTravelersImage" src="" alt="Happy Travelers">
+                <button class="travelers-modal-nav prev" onclick="navigateTravelersGallery(-1)">‹</button>
+                <button class="travelers-modal-nav next" onclick="navigateTravelersGallery(1)">›</button>
+            </div>
+            <div class="travelers-modal-thumbnails" id="travelersModalThumbnails">
+                <!-- Thumbnails will be dynamically inserted here -->
+            </div>
+            <div class="travelers-modal-info">
+                <p class="travelers-modal-description">
+                    Our happy customers enjoying their unforgettable journeys with Centaur Travel Planners
+                </p>
+            </div>
+        </div>
+    </div>
 
     <!-- Contact Section -->
     <section class="contact animate-on-scroll" id="contact">
@@ -1431,38 +3046,36 @@ Overall, I'd highly recommend Centaur Travel Planners to anyone looking for a co
                     Get in touch and let's craft your perfect adventure.
                 </p>
                 
-                <div class="contact-details">
-                    <div class="contact-item">
+                <<div class="contact-details">
+                    <a href="https://maps.app.goo.gl/qAiePXWAXmiqxsSQ9" target="_blank" class="contact-item" style="text-decoration: none; color: inherit;">
                         <div class="contact-icon">📍</div>
                         <div>
                             <strong>Visit Us</strong><br>
                             Keetholi Jn, Kottapuram P O<br>
                             Kodungallur - 680667
                         </div>
-                    </div>
-                    <div class="contact-item">
+                    </a>
+                    <a href="tel:+918714716714" class="contact-item" style="text-decoration: none; color: inherit;">
                         <div class="contact-icon">📞</div>
                         <div>
                             <strong>Call Us</strong><br>
                             +91 87147 16714
                         </div>
-                    </div>
-                    <div class="contact-item">
+                    </a>
+                    <a href="mailto:info@centaurtravelplanners.com" class="contact-item" style="text-decoration: none; color: inherit;">
                         <div class="contact-icon">✉️</div>
                         <div>
                             <strong>Email Us</strong><br>
                             info@centaurtravelplanners.com
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <a href="https://share.google/cg6uSUi9KYhbVtCRw" target="_blank" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 1rem;">
-                            <div class="contact-icon" style="background: #4285F4;">🌟</div>
-                            <div>
-                                <strong>Google Reviews</strong><br>
-                                5.0 ★★★★★ (50+ reviews)
-                            </div>
-                        </a>
-                    </div>
+                    </a>
+                    <a href="https://share.google/cg6uSUi9KYhbVtCRw" target="_blank" class="contact-item" style="text-decoration: none; color: inherit;">
+                        <div class="contact-icon" style="background: #4285F4;">🌟</div>
+                        <div>
+                            <strong>Google Reviews</strong><br>
+                            5.0 ★★★★★ (50+ reviews)
+                        </div>
+                    </a>
                 </div>
             </div>
             
@@ -1492,7 +3105,6 @@ Overall, I'd highly recommend Centaur Travel Planners to anyone looking for a co
     <footer>
         <div class="footer-container">
             <div class="footer-brand">
-                <!-- Update with direct image link from imgbb -->
                 <img src="https://i.ibb.co/ccxLCTcQ/Black.png" alt="Centaur Travel Planners"
                      onerror="this.src='https://drive.google.com/uc?export=view&id=1PEQWk5G8Su10bNcdAb77rXUQn5hHQ7Hb'">
                 <p>
@@ -1506,6 +3118,8 @@ Overall, I'd highly recommend Centaur Travel Planners to anyone looking for a co
                 <ul>
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#services">Services</a></li>
+                    <li><a href="#packages">Packages</a></li>
+                    <li><a href="#fleet">Our Fleet</a></li>
                     <li><a href="#destinations">Destinations</a></li>
                     <li><a href="#gallery">Gallery</a></li>
                 </ul>
@@ -1572,8 +3186,53 @@ Overall, I'd highly recommend Centaur Travel Planners to anyone looking for a co
             </svg>
         </a>
     </div>
-
+<!--
+    <!-- Floating Google Reviews Button -->
+   <!-- <div class="floating-google-reviews">
+        <a href="https://share.google/cg6uSUi9KYhbVtCRw" target="_blank" class="floating-btn google-reviews" title="Google Reviews">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+        </a>
+    </div>
+*/-->
     <script>
+        // Global variables
+        let currentVehicleName = '';
+        let currentGalleryImages = [];
+        let currentImageIndex = 0;
+
+        // Travelers gallery variables
+        let currentTravelersImageIndex = 0;
+        const travelersImages = [
+            'https://i.ibb.co/fVHqLyw5/1.webp?q=70&w=600&auto=format&fit=crop',
+            'https://i.ibb.co/v6cH2HHk/2.webp?q=70&w=600&auto=format&fit=crop',
+            'https://i.ibb.co/ymmXtp71/3.webp?q=70&w=600&auto=format&fit=crop',
+            'https://i.ibb.co/V0pnLnXq/4.webp?q=70&w=600&auto=format&fit=crop',
+            'https://i.ibb.co/m5FXYxz8/5.webp?q=70&w=600&auto=format&fit=crop',
+            'https://i.ibb.co/1GTPWZjV/6.webp?q=70&w=600&auto=format&fit=crop',
+            'https://i.ibb.co/wFcm5YM1/7.webp?q=70&w=600&auto=format&fit=crop',
+            'https://i.ibb.co/DPvwVYRm/8.webp?q=70&w=600&auto=format&fit=crop',
+            'https://i.ibb.co/b5S9z9YD/9.webp?q=70&w=600&auto=format&fit=crop',
+            'https://i.ibb.co/PLXCxgY/10.webp?q=70&w=600&auto=format&fit=crop',
+            'https://i.ibb.co/RT5pWDXk/11.webp?q=70&w=600&auto=format&fit=crop'
+        ];
+
+        // Preload travelers images for faster modal loading
+        let travelersImagesPreloaded = false;
+        function preloadTravelersImages() {
+            if (!travelersImagesPreloaded) {
+                travelersImages.forEach(src => {
+                    const img = new Image();
+                    img.src = src;
+                });
+                travelersImagesPreloaded = true;
+            }
+        }
+
         // Mobile menu toggle
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
@@ -1626,6 +3285,9 @@ Overall, I'd highly recommend Centaur Travel Planners to anyone looking for a co
         document.addEventListener('DOMContentLoaded', function() {
             const elements = document.querySelectorAll('.animate-on-scroll');
             elements.forEach(el => observer.observe(el));
+            
+            // Preload travelers images when page loads
+            setTimeout(preloadTravelersImages, 2000);
         });
 
         // Form submission via WhatsApp
@@ -1657,16 +3319,371 @@ Overall, I'd highly recommend Centaur Travel Planners to anyone looking for a co
             alert('Opening WhatsApp to send your message...');
         }
 
-        // Parallax effect for hero image
+        // Auto-fill form with package details
+        function selectPackage(packageName, duration, route) {
+            // Scroll to contact form
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            
+            // Fill the form
+            setTimeout(() => {
+                document.getElementById('destination').value = packageName + ' - ' + duration;
+                document.getElementById('message').value = `I'm interested in the ${packageName} (${duration}).\n\nRoute: ${route}\n\nPlease provide more details and pricing.`;
+            }, 500);
+        }
+
+        // Auto-fill form with destination
+        function selectDestination(destinationName) {
+            // Scroll to contact form
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            
+            // Fill the form
+            setTimeout(() => {
+                document.getElementById('destination').value = destinationName;
+                document.getElementById('message').value = `I'm interested in visiting ${destinationName}. Please suggest suitable packages and itineraries.`;
+            }, 500);
+        }
+
+        // Fleet filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const fleetFilters = document.querySelectorAll('.fleet-filter');
+            const vehicleCards = document.querySelectorAll('.vehicle-card');
+            
+            fleetFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    // Update active filter
+                    fleetFilters.forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter vehicles
+                    const category = this.getAttribute('data-category');
+                    
+                    vehicleCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 100);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        });
+
+        // Coming soon functionality
+        function showComingSoon() {
+            alert('🚌 Luxury Bus services coming soon! \n\nWe\'re expanding our fleet to include premium bus options for group travel. Stay tuned for updates!');
+        }
+
+        // All Packages Modal Functions
+        function showAllPackagesModal() {
+            const modal = document.getElementById('allPackagesModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAllPackagesModal() {
+            const modal = document.getElementById('allPackagesModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Destination Package Selection
+        function selectDestinationPackage(packageName, description) {
+            closeAllPackagesModal();
+            
+            // Create WhatsApp message for destination package
+            const whatsappMessage = `*Interest in ${packageName}*%0A%0A` +
+                `${description}%0A%0A` +
+                `I'm interested in this package. Please provide detailed itinerary, pricing and availability.%0A%0A` +
+                `Sent from Centaur Travel website`;
+            
+            // Open WhatsApp with pre-filled message
+            const whatsappURL = `https://wa.me/918714716714?text=${whatsappMessage}`;
+            window.open(whatsappURL, '_blank');
+        }
+
+        // Vehicle gallery functions - IMPROVED
+        function openVehicleGallery(vehicleName, images) {
+            currentVehicleName = vehicleName;
+            currentGalleryImages = images;
+            currentImageIndex = 0;
+            
+            const modal = document.getElementById('vehicleGalleryModal');
+            const galleryTitle = document.getElementById('galleryTitle');
+            const galleryCounter = document.getElementById('galleryCounter');
+            const mainImage = document.getElementById('mainGalleryImage');
+            const thumbnailsContainer = document.getElementById('galleryThumbnails');
+            const bookBtn = document.getElementById('galleryBookBtn');
+            
+            // Set title and counter
+            galleryTitle.textContent = vehicleName + ' - Gallery';
+            updateGalleryCounter();
+            
+            // Set main image
+            mainImage.src = images[0];
+            mainImage.alt = vehicleName;
+            
+            // Clear and populate thumbnails
+            thumbnailsContainer.innerHTML = '';
+            images.forEach((imageUrl, index) => {
+                const thumbnail = document.createElement('div');
+                thumbnail.className = `gallery-thumbnail ${index === 0 ? 'active' : ''}`;
+                thumbnail.onclick = () => showGalleryImage(index);
+                
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = vehicleName;
+                
+                thumbnail.appendChild(img);
+                thumbnailsContainer.appendChild(thumbnail);
+            });
+            
+            // Update book button
+            bookBtn.onclick = function() {
+                closeVehicleGallery();
+                selectVehicle(vehicleName);
+            };
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVehicleGallery() {
+            const modal = document.getElementById('vehicleGalleryModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showGalleryImage(index) {
+            currentImageIndex = index;
+            const mainImage = document.getElementById('mainGalleryImage');
+            mainImage.src = currentGalleryImages[index];
+            
+            // Update thumbnails
+            document.querySelectorAll('.gallery-thumbnail').forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+            
+            updateGalleryCounter();
+        }
+
+        function navigateGallery(direction) {
+            currentImageIndex += direction;
+            
+            if (currentImageIndex >= currentGalleryImages.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = currentGalleryImages.length - 1;
+            }
+            
+            showGalleryImage(currentImageIndex);
+        }
+
+        function updateGalleryCounter() {
+            const counter = document.getElementById('galleryCounter');
+            counter.textContent = `${currentImageIndex + 1} / ${currentGalleryImages.length}`;
+        }
+
+        // Auto-fill form with vehicle selection
+        function selectVehicle(vehicleName) {
+            // Scroll to contact form
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            
+            // Fill the form
+            setTimeout(() => {
+                document.getElementById('destination').value = 'Vehicle Booking - ' + vehicleName;
+                document.getElementById('message').value = `I would like to book the ${vehicleName} for my travel needs. Please provide availability and pricing details.`;
+            }, 500);
+        }
+
+        // Travelers Gallery Functions - NEW
+        function openTravelersGallery(index) {
+            currentTravelersImageIndex = index;
+            
+            const modal = document.getElementById('travelersGalleryModal');
+            const modalTitle = document.querySelector('.travelers-modal-title');
+            const modalCounter = document.getElementById('travelersModalCounter');
+            const mainImage = document.getElementById('mainTravelersImage');
+            const thumbnailsContainer = document.getElementById('travelersModalThumbnails');
+            
+            // Set title and counter
+            modalTitle.textContent = 'Happy Travelers Gallery';
+            updateTravelersModalCounter();
+            
+            // Set main image
+            mainImage.src = travelersImages[index];
+            mainImage.alt = 'Happy Travelers';
+            
+            // Clear and populate thumbnails
+            thumbnailsContainer.innerHTML = '';
+            travelersImages.forEach((imageUrl, i) => {
+                const thumbnail = document.createElement('div');
+                thumbnail.className = `travelers-modal-thumbnail ${i === index ? 'active' : ''}`;
+                thumbnail.onclick = () => showTravelersImage(i);
+                
+                const img = document.createElement('img');
+                img.src = imageUrl.replace('q=80&w=800', 'q=60&w=80&h=60');
+                img.alt = 'Happy Travelers';
+                
+                thumbnail.appendChild(img);
+                thumbnailsContainer.appendChild(thumbnail);
+            });
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeTravelersGallery() {
+            const modal = document.getElementById('travelersGalleryModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function showTravelersImage(index) {
+            currentTravelersImageIndex = index;
+            const mainImage = document.getElementById('mainTravelersImage');
+            mainImage.src = travelersImages[index];
+            
+            // Update thumbnails
+            document.querySelectorAll('.travelers-modal-thumbnail').forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+            
+            updateTravelersModalCounter();
+        }
+
+        function navigateTravelersGallery(direction) {
+            currentTravelersImageIndex += direction;
+            
+            if (currentTravelersImageIndex >= travelersImages.length) {
+                currentTravelersImageIndex = 0;
+            } else if (currentTravelersImageIndex < 0) {
+                currentTravelersImageIndex = travelersImages.length - 1;
+            }
+            
+            showTravelersImage(currentTravelersImageIndex);
+        }
+
+        function updateTravelersModalCounter() {
+            const counter = document.getElementById('travelersModalCounter');
+            counter.textContent = `${currentTravelersImageIndex + 1} / ${travelersImages.length}`;
+        }
+
+        // Happy Travelers Gallery Scroll Functions
+        function scrollTravelers(direction) {
+            const container = document.getElementById('travelersContainer');
+            const scrollAmount = 240; // Width of tile + gap
+            
+            if (direction === 1) {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // Optional: Add keyboard navigation for travelers gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('travelersContainer');
+            const gallerySection = document.getElementById('gallery');
+            
+            // Preload images when user hovers over gallery section
+            if (gallerySection) {
+                gallerySection.addEventListener('mouseenter', preloadTravelersImages);
+            }
+            
+            // Add keyboard arrow key support
+            document.addEventListener('keydown', function(e) {
+                if (container && container.matches(':hover')) {
+                    if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        scrollTravelers(-1);
+                    } else if (e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        scrollTravelers(1);
+                    }
+                }
+            });
+        });
+
+        // Fixed parallax effect for hero image - constrained movement
         window.addEventListener('scroll', function() {
             const scrolled = window.pageYOffset;
-            const heroImage = document.querySelector('.hero-image');
-            if (heroImage) {
-                const maxTranslate = 130;
-        const translateY = Math.min(scrolled * 0.5, maxTranslate);
-        heroImage.style.transform = `translateY(${translateY}px)`;
+            const heroImage = document.querySelector('.hero-image-parallax');
+            if (heroImage && scrolled < window.innerHeight) {
+                // Constrain the parallax movement to prevent overflow
+                const maxTranslate = 50; // Reduced from original value
+                const translateY = Math.min(scrolled * 0.3, maxTranslate);
+                heroImage.style.transform = `translateY(${translateY}px)`;
+            }
+        });
+
+        // Close gallery when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('vehicleGalleryModal')) {
+                closeVehicleGallery();
+            }
+            if (e.target === document.getElementById('allPackagesModal')) {
+                closeAllPackagesModal();
+            }
+            if (e.target === document.getElementById('travelersGalleryModal')) {
+                closeTravelersGallery();
+            }
+        });
+
+        // Close modals on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeVehicleGallery();
+                closeAllPackagesModal();
+                closeTravelersGallery();
+            }
+            // Arrow key navigation in gallery
+            if (document.getElementById('vehicleGalleryModal').classList.contains('active')) {
+                if (e.key === 'ArrowRight') {
+                    navigateGallery(1);
+                } else if (e.key === 'ArrowLeft') {
+                    navigateGallery(-1);
+                }
+            }
+            // Arrow key navigation in travelers gallery
+            if (document.getElementById('travelersGalleryModal').classList.contains('active')) {
+                if (e.key === 'ArrowRight') {
+                    navigateTravelersGallery(1);
+                } else if (e.key === 'ArrowLeft') {
+                    navigateTravelersGallery(-1);
+                }
+            }
+        });
+
+        // Prevent scrolling when modals are open
+        document.getElementById('vehicleGalleryModal').addEventListener('wheel', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const allPackagesModal = document.getElementById('allPackagesModal');
+            const travelersModal = document.getElementById('travelersGalleryModal');
+            
+            if (allPackagesModal) {
+                allPackagesModal.addEventListener('wheel', function(e) {
+                    e.preventDefault();
+                }, { passive: false });
+            }
+            
+            if (travelersModal) {
+                travelersModal.addEventListener('wheel', function(e) {
+                    e.preventDefault();
+                }, { passive: false });
             }
         });
     </script>
 </body>
 </html>
+                           
